@@ -119,5 +119,18 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(found_product.price, product.price)
         self.assertEqual(found_product.available, product.available)
         self.assertEqual(found_product.category, product.category)
+    def test_update_a_product(self):
+        """It should Update a Product"""
+        product = ProductFactory()
+        logging.debug("Product: %s", product)
+        product.create()
+        logging.debug("Created Product: %s", product)
+        product.description = "Updated description"
+        original_id = product.id
+        product.update()
 
-   
+        updated_product = Product.find(product.id)
+        self.assertIsNotNone(updated_product)
+        self.assertEqual(updated_product.id, original_id)
+        self.assertEqual(updated_product.description, "Updated description")
+
